@@ -2,6 +2,7 @@ package ru.netology.page;
 
 import com.codeborne.selenide.SelenideElement;
 
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -17,12 +18,12 @@ public class PaymentPage {
     public SelenideElement cardNumber = $("[placeholder= '0000 0000 0000 0000']");
     public SelenideElement cardMonth = $("[placeholder= '08']");
     public SelenideElement cardYear = $("[placeholder= '22']");
-    public SelenideElement cardOwner = $("[class='input__control']");
+    public SelenideElement cardOwner = $(byText("Владелец")).parent().$(".input__control");
     public SelenideElement cardCVC = $("[placeholder= '999']");
     //Разные кнопки, оповещения.
     public SelenideElement continueButton = $(withText("Продолжить"));
-    public SelenideElement succeedNotification = $("[class='notification notification_status_ok notification_has-closer notification_stick-to_right notification_theme_alfa-on-white']");
+    public SelenideElement succeedNotification = $(".notification_status_ok");
     public SelenideElement closeSucceedNotification = $("[type='button']");
-    public SelenideElement failedNotification = $("[class='notification notification_visible notification_status_error notification_has-closer notification_stick-to_right notification_theme_alfa-on-white']");
+    public SelenideElement failedNotification = $(".notification_status_error");
     public SelenideElement closeFailedNotification = $("[type='button']");
 }
