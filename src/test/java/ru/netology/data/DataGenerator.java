@@ -66,9 +66,11 @@ public class DataGenerator {
         return faker.name().firstName() + " " + faker.name().lastName();
     }
 
+    private String[] cvc = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    private Random randomCVC = new Random();
 
     public String getRandomCVC() {
-        String RandomCVC = new Faker().number().digits(3);
-        return RandomCVC;
+        return cvc[randomCVC.nextInt(cvc.length)] + cvc[randomCVC.nextInt(cvc.length)] + cvc[randomCVC.nextInt(cvc.length)];
+
     }
 }

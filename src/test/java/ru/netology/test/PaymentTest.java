@@ -3,6 +3,7 @@ package ru.netology.test;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
+import ru.netology.SQL.SQLHelperPayment;
 import ru.netology.data.DataGenerator;
 import ru.netology.page.PaymentPage;
 
@@ -10,6 +11,7 @@ import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PaymentTest {
     //Тестирование покупки тура по дебетовой карте.
@@ -34,6 +36,7 @@ public class PaymentTest {
 
 
     @Test
+    @DisplayName("1.1. Успешная покупка.")
     public void ApprovedPathPayTest() {
         paymentPage.cardNumber.setValue(dataGenerator.getApprovedCardNumber());
         paymentPage.cardMonth.setValue(dataGenerator.getRandomMonths());
@@ -42,10 +45,12 @@ public class PaymentTest {
         paymentPage.cardCVC.setValue(dataGenerator.getRandomCVC());
         paymentPage.continueButton.click();
         paymentPage.succeedNotification.should(appear, Duration.ofSeconds(15));
+        assertEquals("APPROVED", SQLHelperPayment.getCardStatusApproved());
     }
 
     @Test
-    public void DeclinedPathPayTest() {
+    @DisplayName("1.2. Карта отклонена.")
+    public void DeclinedPathPayTest() {//Баг.
         paymentPage.cardNumber.setValue(dataGenerator.getDeclinedCardNumber());
         paymentPage.cardMonth.setValue(dataGenerator.getRandomMonths());
         paymentPage.cardYear.setValue(dataGenerator.getRandomYear());
@@ -53,5 +58,6 @@ public class PaymentTest {
         paymentPage.cardCVC.setValue(dataGenerator.getRandomCVC());
         paymentPage.continueButton.click();
         paymentPage.failedNotification.should(appear, Duration.ofSeconds(15));
+        assertEquals("DECLINED", SQLHelperPayment.getCardStatusDeclined());
     }
 }
