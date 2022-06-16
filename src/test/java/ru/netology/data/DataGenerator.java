@@ -47,10 +47,6 @@ public class DataGenerator {
         return months[randomMonth.nextInt(months.length)];
     }
 
-    public String getCurrentMonth() {//Выводим текущий месяц.
-        Calendar calendar = Calendar.getInstance();
-        return (new SimpleDateFormat("MM").format(calendar.getTime()));
-    }
 
     //Создаем случайный год.
     private String[] years = new String[]{"23", "24", "25", "26", "27"};
@@ -72,5 +68,34 @@ public class DataGenerator {
     public String getRandomCVC() {
         return cvc[randomCVC.nextInt(cvc.length)] + cvc[randomCVC.nextInt(cvc.length)] + cvc[randomCVC.nextInt(cvc.length)];
 
+    }
+
+    //Текущие и прошлые месяц и год.
+    public String getCurrentMonth() {//Выводим текущий месяц.
+        Calendar calendar = Calendar.getInstance();
+        return (new SimpleDateFormat("MM").format(calendar.getTime()));
+    }
+
+    public String getCurrentYear() {//Выводим текущий год.
+        Calendar calendar = Calendar.getInstance();
+        return (new SimpleDateFormat("YY").format(calendar.getTime()));
+    }
+
+    public String getLastMonth() {//Выводим прошлый месяц.
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -1);
+        return (new SimpleDateFormat("MM")).format(calendar.getTime());
+    }
+
+    public String getLastYear() {//Выводим прошлый год.
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, -1);
+        return (new SimpleDateFormat("YY")).format(calendar.getTime());
+    }
+
+    public String getFarFutureYear() {//Выводим будущий год.
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, +6);
+        return (new SimpleDateFormat("YY")).format(calendar.getTime());
     }
 }

@@ -8,7 +8,8 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class PaymentPage {
     //CSS-селекторы для элементов продающей страницы
-    //Кнопки для способов оплаты.
+    //Кнопки для способов оплаты и пространство с0 всеми вводимыми данными.
+    public SelenideElement formTable = $("[class='form form_size_m form_theme_alfa-on-white']");
     public SelenideElement payButton = $(withText("Купить"));
     public SelenideElement creditButton = $(withText("Купить в кредит"));
     //Хедеры по каждому способу оплаты.
