@@ -1,6 +1,8 @@
 package ru.netology.page;
 
 import com.codeborne.selenide.SelenideElement;
+import ru.netology.data.CardData;
+
 import ru.netology.data.DataGenerator;
 
 import java.time.Duration;
@@ -47,81 +49,104 @@ public class PaymentPage {
     public void paymentFailedNotification() {
         failedNotification.shouldHave(text("Ошибка! Банк отказал в проведении операции."),Duration.ofSeconds(15)).shouldBe(visible);
     }
-//Сообщения о пустых полях.
+//Сообщения о пустых полях и неверном формате.
     public void allFieldEmptyNotification() {
-        emptyCardNumberNotification();
-        emptyMonthNotification();
-        emptyYearNotification();
-        emptyOwnerNotification();
-        emptyCVCNotification();
+        mistakeFormatCardNumber();
+        mistakeFormatMonth();
+        mistakeFormatYear();
+        mistakeFormatOwner();
+        mistakeFormatCVC();
     }
 
-    public void emptyCardNumberNotification() {
+    public void mistakeFormatCardNumber() {
         paymentHeader.shouldHave(text("Номер карты")).shouldHave(text("Неверный формат")).shouldBe(visible);
     }
 
-    public  void emptyMonthNotification() {
+    public  void mistakeFormatMonth() {
         paymentHeader.shouldHave(text("Месяц")).shouldHave(text("Неверный формат")).shouldBe(visible);
     }
 
-    public  void emptyYearNotification() {
+    public  void mistakeFormatYear() {
         paymentHeader.shouldHave(text("Год")).shouldHave(text("Неверный формат")).shouldBe(visible);
     }
 
-    public void emptyOwnerNotification() {
+    public void mistakeFormatOwner() {
         paymentHeader.shouldHave(text("Владелец")).shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
     }
 
-    public void emptyCVCNotification() {
+    public void mistakeFormatCVC() {
         paymentHeader.shouldHave(text("CVC/CVV")).shouldHave(text("Неверный формат")).shouldBe(visible);
     }
 
+    public void wrongExpireMonth() {
+        paymentHeader.shouldHave(text("Месяц")).shouldHave(text("Неверно указан срок действия карты")).shouldBe(visible);
+    }
+
+    public void wrongExpireYear() {
+        paymentHeader.shouldHave(text("Год")).shouldHave(text("Истёк срок действия карты")).shouldBe(visible);
+    }
+
+    public void farFutureWrongExpireYear(){
+        paymentHeader.shouldHave(text("Год")).shouldHave(text("Неверно указан срок действия карты")).shouldBe(visible);
+    }
+
+
+    public void getInsertCardData(CardData cardData) {// Метод для заполнения данных карты
+        cardNumber.setValue(cardData.getCardNumber());
+        cardMonth.setValue(cardData.getCardMonth());
+        cardYear.setValue(cardData.getCardYear());
+        cardOwner.setValue(cardData.getCardOwner());
+        cardCVC.setValue(cardData.getCardCVC());
+        continueButton.click();
+    }
+
+
     //Методы для тестов
-    public void approvedPayment() {// для 1.1.
-        cardNumber.setValue(DataGenerator.getApprovedCardNumber());
-        cardMonth.setValue(DataGenerator.getValidMonth());
-        cardYear.setValue(DataGenerator.getValidYear());
-        cardOwner.setValue(DataGenerator.generateCardOwnerName());
-        cardCVC.setValue(DataGenerator.getRandomCVC());
-        continueButton.click();
-    }
+   // public void approvedPayment() {// для 1.1.
+     //   cardNumber.setValue(DataGenerator.getApprovedCardNumber());
+     //   cardMonth.setValue(DataGenerator.getValidMonth());
+     //   cardYear.setValue(DataGenerator.getValidYear());
+      //  cardOwner.setValue(DataGenerator.generateCardOwnerName());
+      //  cardCVC.setValue(DataGenerator.getRandomCVC());
+     //   continueButton.click();
+   // }
 
-    public void declinedPayment() {// для 1.2.
-        cardNumber.setValue(DataGenerator.getDeclinedCardNumber());
-        cardMonth.setValue(DataGenerator.getValidMonth());
-        cardYear.setValue(DataGenerator.getValidYear());
-        cardOwner.setValue(DataGenerator.generateCardOwnerName());
-        cardCVC.setValue(DataGenerator.getRandomCVC());
-        continueButton.click();
-    }
+   // public void declinedPayment() {// для 1.2.
+     //   cardNumber.setValue(DataGenerator.getDeclinedCardNumber());
+    //    cardMonth.setValue(DataGenerator.getValidMonth());
+    //    cardYear.setValue(DataGenerator.getValidYear());
+    //    cardOwner.setValue(DataGenerator.generateCardOwnerName());
+    //    cardCVC.setValue(DataGenerator.getRandomCVC());
+   //     continueButton.click();
+   // }
 
-    public void otherBankPayment() {// для 1.3.
-        cardNumber.setValue(DataGenerator.getOtherBankCardNumber());
-        cardMonth.setValue(DataGenerator.getValidMonth());
-        cardYear.setValue(DataGenerator.getValidYear());
-        cardOwner.setValue(DataGenerator.generateCardOwnerName());
-        cardCVC.setValue(DataGenerator.getRandomCVC());
-        continueButton.click();
-    }
+    //public void otherBankPayment() {// для 1.3.
+     //   cardNumber.setValue(DataGenerator.getOtherBankCardNumber());
+     //   cardMonth.setValue(DataGenerator.getValidMonth());
+    //    cardYear.setValue(DataGenerator.getValidYear());
+    //    cardOwner.setValue(DataGenerator.generateCardOwnerName());
+    //    cardCVC.setValue(DataGenerator.getRandomCVC());
+   //     continueButton.click();
+  //  }
 
-    public void allFieldEmpty() {// для 1.4.
-        cardNumber.setValue("");
-        cardMonth.setValue("");
-        cardYear.setValue("");
-        cardOwner.setValue("");
-        cardCVC.setValue("");
-        continueButton.click();
-    }
+    //public void allFieldEmpty() {// для 1.4.
+    //    cardNumber.setValue("");
+    //    cardMonth.setValue("");
+   //     cardYear.setValue("");
+    //    cardOwner.setValue("");
+    //    cardCVC.setValue("");
+   //     continueButton.click();
+  //  }
 
 
-    public void emptyCardNumber() {// для 1.5.
-        cardNumber.setValue("");
-        cardMonth.setValue(DataGenerator.getValidMonth());
-        cardYear.setValue(DataGenerator.getValidYear());
-        cardOwner.setValue(DataGenerator.generateCardOwnerName());
-        cardCVC.setValue(DataGenerator.getRandomCVC());
-        continueButton.click();
-    }
+    //public void emptyCardNumber() {// для 1.5.
+   //     cardNumber.setValue("");
+   //     cardMonth.setValue(DataGenerator.getValidMonth());
+   //     cardYear.setValue(DataGenerator.getValidYear());
+   //     cardOwner.setValue(DataGenerator.generateCardOwnerName());
+   //     cardCVC.setValue(DataGenerator.getRandomCVC());
+   //     continueButton.click();
+  //  }
 
 
 }

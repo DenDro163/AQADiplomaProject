@@ -15,8 +15,8 @@ public class DataGenerator {
     private static String approvedCardNumber = "4444 4444 4444 4441";
     private static String declinedCardNumber = "4444 4444 4444 4442";
     private static String otherBankCardNumber = "3456 5194 8316 7531";
-    private String shorterCardNumber = "4444 4444 4444 444";
-    private String shortestCardNumber = "4";
+    private static String shorterCardNumber = "4444 4444 4444 444";
+    private static String shortestCardNumber = "4";
 
     public static String getApprovedCardNumber() {
         return approvedCardNumber;
@@ -26,51 +26,27 @@ public class DataGenerator {
         return declinedCardNumber;
     }
 
-    public static   String getOtherBankCardNumber() {
+    public static  String getOtherBankCardNumber() {
         return otherBankCardNumber;
     }
 
-    public String getShorterCardNumber() {
+    public static String getShorterCardNumber() {
         return shorterCardNumber;
     }
 
-    public String getShortestCardNumber() {
+    public static String getShortestCardNumber() {
         return shortestCardNumber;
     }
 
     //Создание случайных данных.
     private static final Faker faker = new Faker(new Locale("en"));
 
-    private static String generateMonth(int months) {//Метод генерации месяца.
+    public static String generateMonth(int months) {//Метод генерации месяца.
         return LocalDate.now().plusMonths(months).format(DateTimeFormatter.ofPattern("MM"));
     }
 
-    private static String generateYear(int years) {//Метод генерации года.
+    public static String generateYear(int years) {//Метод генерации года.
         return LocalDate.now().plusYears(years).format(DateTimeFormatter.ofPattern("yy"));
-    }
-
-    public static String getValidMonth() {
-        return generateMonth(1);
-    }
-
-    public static String getValidYear() {
-        return generateYear(1);
-    }
-
-    public String getCurrentMonth() {
-        return generateMonth(0);
-    }
-
-    public String getCurrentYear() {
-        return generateYear(0);
-    }
-
-    public String getLastMonth() {
-        return generateMonth(-1);
-    }
-
-    public String getLastYear() {
-        return generateYear(-1);
     }
 
 
