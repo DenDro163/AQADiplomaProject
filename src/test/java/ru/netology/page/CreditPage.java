@@ -1,5 +1,6 @@
 package ru.netology.page;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.CardData;
 
@@ -42,47 +43,6 @@ public class CreditPage {
         failedNotification.shouldHave(text("Ошибка! Банк отказал в проведении операции."), Duration.ofSeconds(15)).shouldBe(visible);
     }
 
-    public void creditAllFieldEmptyNotification() {
-        creditMistakeFormatCardNumber();//
-        creditMistakeFormatMonth();
-        creditMistakeFormatYear();
-        creditMistakeFormatOwner();
-        creditMistakeFormatCVC();
-    }
-
-    public void creditMistakeFormatCardNumber() {
-        creditHeader.shouldHave(text("Номер карты")).shouldHave(text("Неверный формат")).shouldBe(visible);//
-    }
-
-    public void creditMistakeFormatMonth() {
-        creditHeader.shouldHave(text("Месяц")).shouldHave(text("Неверный формат")).shouldBe(visible);
-    }
-
-    public void creditMistakeFormatYear() {
-        creditHeader.shouldHave(text("Год")).shouldHave(text("Неверный формат")).shouldBe(visible);
-    }
-
-    public void creditMistakeFormatOwner() {
-        creditHeader.shouldHave(text("Владелец")).shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
-    }
-
-    public void creditMistakeFormatCVC() {
-        creditHeader.shouldHave(text("CVC/CVV")).shouldHave(text("Неверный формат")).shouldBe(visible);
-    }
-
-    public void creditWrongExpireMonth() {
-        creditHeader.shouldHave(text("Месяц")).shouldHave(text("Неверно указан срок действия карты")).shouldBe(visible);
-    }
-
-    public void creditWrongExpireYear() {
-        creditHeader.shouldHave(text("Год")).shouldHave(text("Истёк срок действия карты")).shouldBe(visible);
-    }
-
-    public void creditFarFutureWrongExpireYear() {
-        creditHeader.shouldHave(text("Год")).shouldHave(text("Неверно указан срок действия карты")).shouldBe(visible);
-    }
-
-
     public void getInsertCardDataForCredit(CardData cardData) {
         cardNumber.setValue(cardData.getCardNumber());
         cardMonth.setValue(cardData.getCardMonth());
@@ -91,4 +51,75 @@ public class CreditPage {
         cardCVC.setValue(cardData.getCardCVC());
         continueButton.click();
     }
+
+    public void verifyInvalidFormatCredit() {
+        $(".input__sub").shouldBe(visible).shouldHave(text("Неверный формат"), Duration.ofSeconds(15));
+    }
+
+    public void verifyInvalidCardValidityPeriodCredit() {
+        $(".input__sub").shouldBe(visible)
+                .shouldHave(text("Неверно указан срок действия карты"), Duration.ofSeconds(15));
+    }
+
+    public void verifyCardExpiredCredit() {
+        $(".input__sub").shouldBe(visible)
+                .shouldHave(text("Истёк срок действия карты"), Duration.ofSeconds(15));
+    }
+
+    public void verifyEmptyFieldCredit() {
+        $(".input__sub").shouldBe(visible)
+                .shouldHave(text("Поле обязательно для заполнения"), Duration.ofSeconds(15));
+    }
+
+    public void verifyAllFieldsFilledCredit() {
+        $$(".input__sub").shouldHave(CollectionCondition.size(5))
+                .shouldHave(CollectionCondition.texts("Поле обязательно для заполнения"));
+    }
+
+    public void verifyInvalidOwnerCredit() {
+        $(".input__sub").shouldBe(visible)
+                .shouldHave(text("Введите имя и фамилию, указанные на карте"), Duration.ofSeconds(15));
+    }
+
+    // public void creditAllFieldEmptyNotification() {
+    //     creditMistakeFormatCardNumber();//
+    //    creditMistakeFormatMonth();
+    //    creditMistakeFormatYear();
+    //      creditMistakeFormatOwner();
+    //     creditMistakeFormatCVC();
+    //  }
+
+    // public void creditMistakeFormatCardNumber() {
+    //      creditHeader.shouldHave(text("Номер карты")).shouldHave(text("Неверный формат")).shouldBe(visible);//
+    // }
+
+    //   public void creditMistakeFormatMonth() {
+    //     creditHeader.shouldHave(text("Месяц")).shouldHave(text("Неверный формат")).shouldBe(visible);
+    //  }
+
+    // public void creditMistakeFormatYear() {
+    //    creditHeader.shouldHave(text("Год")).shouldHave(text("Неверный формат")).shouldBe(visible);
+    // }
+
+    // public void creditMistakeFormatOwner() {
+    //    creditHeader.shouldHave(text("Владелец")).shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
+    // }
+
+    // public void creditMistakeFormatCVC() {
+    //      creditHeader.shouldHave(text("CVC/CVV")).shouldHave(text("Неверный формат")).shouldBe(visible);
+    //  }
+
+    //  public void creditWrongExpireMonth() {
+    //     creditHeader.shouldHave(text("Месяц")).shouldHave(text("Неверно указан срок действия карты")).shouldBe(visible);
+    //  }
+
+    //  public void creditWrongExpireYear() {
+    //     creditHeader.shouldHave(text("Год")).shouldHave(text("Истёк срок действия карты")).shouldBe(visible);
+    // }
+
+    //public void creditFarFutureWrongExpireYear() {
+    //     creditHeader.shouldHave(text("Год")).shouldHave(text("Неверно указан срок действия карты")).shouldBe(visible);
+    // }
+
+
 }

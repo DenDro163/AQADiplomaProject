@@ -62,7 +62,7 @@ public class PaymentTest {
 
     @Test
     @DisplayName("1.3. Карта другого банка отклонена.")
-    public void otherBanksCardTest() {
+    public void otherBanksCardPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getOtherBankCardNumber(), generateMonth(1), generateYear(1), generateCardOwnerName(), getRandomCVC());
@@ -72,212 +72,213 @@ public class PaymentTest {
 
     @Test
     @DisplayName("1.4. Пустые поля.")
-    public void emptyFieldsTest() {//По идее все поля должны быть "Поле обязательно для заполнения".
+    public void emptyFieldsPayTest() {//Баг-почти везде неверный формат
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData("", "", "", "", "");
         paymentPage.getInsertCardData(card);
-        paymentPage.allFieldEmptyNotification();
+        paymentPage.verifyAllFieldsFilledPay();
     }
 
     @Test
-    @DisplayName("1.5. Пустое поле 'Номер карты'.")
-    public void emptyCardNumberTest() {
+    @DisplayName("1.5. Пустое поле 'Номер карты'.")//Баг
+    public void emptyCardNumberPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData("", generateMonth(1), generateYear(1), generateCardOwnerName(), getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatCardNumber();
+        paymentPage.verifyEmptyFieldPay();
     }
 
     @Test
     @DisplayName("1.6. Неполный номер карты '15 знаков'.")
-    public void shorterCardNumberTest() {
+    public void shorterCardNumberPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getShorterCardNumber(), generateMonth(1), generateYear(1), generateCardOwnerName(), getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatCardNumber();
+        paymentPage.verifyInvalidFormatPay();
     }
 
     @Test
     @DisplayName("1.7. Неполный номер карты '1 знаков'.")
-    public void shortestCardNumberTest() {
+    public void shortestCardNumberPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getShortestCardNumber(), generateMonth(1), generateYear(1), generateCardOwnerName(), getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatCardNumber();
+        paymentPage.verifyInvalidFormatPay();
     }
 
     @Test
-    @DisplayName("1.8. Пустое поле 'Месяц'.")
-    public void emptyMonthTest() {
+    @DisplayName("1.8. Пустое поле 'Месяц'.")//баг
+    public void emptyMonthPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), "", generateYear(1), generateCardOwnerName(), getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatMonth();
+        paymentPage.verifyEmptyFieldPay();
     }
 
     @Test
     @DisplayName("1.9. Неккоректный номер месяца '1 знак'")
-    public void oneNumberMonthTest() {
+    public void oneNumberMonthPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), "3", generateYear(1), generateCardOwnerName(), getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatMonth();
+        paymentPage.verifyInvalidFormatPay();
     }
 
     @Test
     @DisplayName("1.10. Неккоректный номер месяца '2 ноля'")
-    public void twoZeroNumberMonthTest() {//баг
+    public void twoZeroNumberMonthPayTest() {//баг
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), "00", generateYear(1), generateCardOwnerName(), getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatMonth();
+        paymentPage.verifyInvalidFormatPay();
     }
 
     @Test
     @DisplayName("1.11. Неккоректный номер месяца 'больше 12'")
-    public void moreThanTwelveNumberMonthTest() {
+    public void moreThanTwelveNumberMonthPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), "13", generateYear(1), generateCardOwnerName(), getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.wrongExpireMonth();
+        paymentPage.verifyInvalidCardValidityPeriodPay();
     }
 
+    @Test
+    @DisplayName("1.12. Неккоректный номер месяца 'прошлый месяц'")
+    public void lastMonthPayTest() {
+        var startPage = new StartPage();
+        var paymentPage = startPage.payment();
+        CardData card = new CardData(getApprovedCardNumber(), generateMonth(-1), generateYear(0), generateCardOwnerName(), getRandomCVC());
+        paymentPage.getInsertCardData(card);
+        paymentPage.verifyInvalidCardValidityPeriodPay();
+    }
 
     @Test
-    @DisplayName("1.13. Пустое поле 'Год'.")
-    public void emptyYearTest() {
+    @DisplayName("1.13. Пустое поле 'Год'.")//баг
+    public void emptyYearPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), "", generateCardOwnerName(), getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatYear();
+        paymentPage.verifyEmptyFieldPay();
     }
 
     @Test
     @DisplayName("1.14. Неккоректный номер года 'Ноль'.")
-    public void zeroYearTest() {
+    public void zeroYearPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), "0", generateCardOwnerName(), getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatYear();
+        paymentPage.verifyInvalidFormatPay();
     }
 
     @Test
     @DisplayName("1.15. Неккоректный номер года '2 ноля'.")
-    public void twoZeroYearTest() {
+    public void twoZeroYearPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), "00", generateCardOwnerName(), getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.wrongExpireYear();
+        paymentPage.verifyCardExpiredPay();
     }
 
     @Test
     @DisplayName("1.16. Неккоректный номер года 'Прошлый год'.")
-    public void lastYearTest() {
+    public void lastYearPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), generateYear(-1), generateCardOwnerName(), getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.wrongExpireYear();
+        paymentPage.verifyCardExpiredPay();
     }
 
     @Test
     @DisplayName("1.17. Неккоректный номер года 'Более 6 лет от текущего'.")
-    public void farFutureYearTest() {
+    public void farFutureYearPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), generateYear(6), generateCardOwnerName(), getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.farFutureWrongExpireYear();
+        paymentPage.verifyInvalidCardValidityPeriodPay();
     }
 
     @Test
     @DisplayName("1.18. Пустое поле 'Владелец'.")
-    public void emptyCardOwnerTest() {
+    public void emptyCardOwnerPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), generateYear(1), "", getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatOwner();
+        paymentPage.verifyEmptyFieldPay();
     }
 
     @Test
     @DisplayName("1.19.1. Неккоректное имя владельца '1 слово на английском'.")
-    public void oneNameEngCardOwnerTest() {//Баг
+    public void oneNameEngCardOwnerPayTest() {//Баг
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), generateYear(1), "OBAMA", getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatOwner();
+        paymentPage.verifyInvalidOwnerPay();
     }
 
     @Test
     @DisplayName("1.19.2. Неккоректное имя владельца '1 слово на русском'.")
-    public void oneNameRusCardOwnerTest() {//Баг
+    public void oneNameRusCardOwnerPayTest() {//Баг
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), generateYear(1), "Димитрий", getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatOwner();
+        paymentPage.verifyInvalidFormatPay();
     }
 
     @Test
     @DisplayName("1.19.3. Неккоректное имя владельца '2 слова на русском'.")
-    public void FullNameRusCardOwnerTest() {//Баг
+    public void FullNameRusCardOwnerPayTest() {//Баг
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), generateYear(1), "Димитрий Иванов", getRandomCVC());
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatOwner();
+        paymentPage.verifyInvalidFormatPay();
     }
 
     @Test
-    @DisplayName("1.20. Пустое поле CVC/CVV.")
-    public void emptyCVCTest() {
+    @DisplayName("1.20. Пустое поле CVC/CVV.")//баг, вопрос.
+    public void emptyCVCPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), generateYear(1), generateCardOwnerName(), "");
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatCVC();
+        paymentPage.verifyEmptyFieldPay();
     }
 
     @Test
     @DisplayName("1.21. Неккоректный номер CVC/CVV '2 цифры'.")
-    public void wrongCVCTest() {
+    public void wrongCVCPayTest() {
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), generateYear(1), generateCardOwnerName(), "45");
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatCVC();
+        paymentPage.verifyInvalidFormatPay();
     }
 
     @Test
-    @DisplayName("1.22.1. Неккоректный номер CVC/CVV 'Три ноля'.")
-    public void tripleZeroCVCTest() {//баг
+    @DisplayName("1.22. Неккоректный номер CVC/CVV 'Три ноля'.")
+    public void tripleZeroCVCPayTest() {//баг
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), generateYear(1), generateCardOwnerName(), "000");
         paymentPage.getInsertCardData(card);
-        paymentPage.mistakeFormatCVC();
+        paymentPage.verifyInvalidFormatPay();
     }
 
-    @Test
-    @DisplayName("1.22.2. Неккоректный номер CVC/CVV 'Три цифры, но первая 0'.")
-    public void zeroFirstCVVTest() {
-        var startPage = new StartPage();
-        var paymentPage = startPage.payment();
-        CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), generateYear(1), generateCardOwnerName(), "045");
-        paymentPage.getInsertCardData(card);
-        paymentPage.paymentSuccessfulNotification();
-    }
+
 }

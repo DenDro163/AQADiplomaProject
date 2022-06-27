@@ -1,5 +1,6 @@
 package ru.netology.page;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.CardData;
 
@@ -41,55 +42,14 @@ public class PaymentPage {
         paymentHeader.shouldBe(visible);
     }
 
-//Сообщение о успешной или неуспешной регистрации.
+    //Сообщение о успешной или неуспешной регистрации.
     public void paymentSuccessfulNotification() {
         succeedNotification.shouldHave(text("Успешно Операция одобрена Банком."), Duration.ofSeconds(15)).shouldBe(visible);
     }
 
     public void paymentFailedNotification() {
-        failedNotification.shouldHave(text("Ошибка! Банк отказал в проведении операции."),Duration.ofSeconds(15)).shouldBe(visible);
+        failedNotification.shouldHave(text("Ошибка! Банк отказал в проведении операции."), Duration.ofSeconds(15)).shouldBe(visible);
     }
-//Сообщения о пустых полях и неверном формате.
-    public void allFieldEmptyNotification() {
-        mistakeFormatCardNumber();
-        mistakeFormatMonth();
-        mistakeFormatYear();
-        mistakeFormatOwner();
-        mistakeFormatCVC();
-    }
-
-    public void mistakeFormatCardNumber() {
-        paymentHeader.shouldHave(text("Номер карты")).shouldHave(text("Неверный формат")).shouldBe(visible);
-    }
-
-    public  void mistakeFormatMonth() {
-        paymentHeader.shouldHave(text("Месяц")).shouldHave(text("Неверный формат")).shouldBe(visible);
-    }
-
-    public  void mistakeFormatYear() {
-        paymentHeader.shouldHave(text("Год")).shouldHave(text("Неверный формат")).shouldBe(visible);
-    }
-
-    public void mistakeFormatOwner() {
-        paymentHeader.shouldHave(text("Владелец")).shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
-    }
-
-    public void mistakeFormatCVC() {
-        paymentHeader.shouldHave(text("CVC/CVV")).shouldHave(text("Неверный формат")).shouldBe(visible);
-    }
-
-    public void wrongExpireMonth() {
-        paymentHeader.shouldHave(text("Месяц")).shouldHave(text("Неверно указан срок действия карты")).shouldBe(visible);
-    }
-
-    public void wrongExpireYear() {
-        paymentHeader.shouldHave(text("Год")).shouldHave(text("Истёк срок действия карты")).shouldBe(visible);
-    }
-
-    public void farFutureWrongExpireYear(){
-        paymentHeader.shouldHave(text("Год")).shouldHave(text("Неверно указан срок действия карты")).shouldBe(visible);
-    }
-
 
     public void getInsertCardData(CardData cardData) {// Метод для заполнения данных карты
         cardNumber.setValue(cardData.getCardNumber());
@@ -100,6 +60,77 @@ public class PaymentPage {
         continueButton.click();
     }
 
+    // Сообщения о неверном формате и пустом поле
+    public void verifyInvalidFormatPay() {
+        $(".input__sub").shouldBe(visible).shouldHave(text("Неверный формат"), Duration.ofSeconds(15));
+    }
+
+    public void verifyInvalidCardValidityPeriodPay() {
+        $(".input__sub").shouldBe(visible)
+                .shouldHave(text("Неверно указан срок действия карты"), Duration.ofSeconds(15));
+    }
+
+    public void verifyCardExpiredPay() {
+        $(".input__sub").shouldBe(visible)
+                .shouldHave(text("Истёк срок действия карты"), Duration.ofSeconds(15));
+    }
+
+    public void verifyEmptyFieldPay() {
+        $(".input__sub").shouldBe(visible)
+                .shouldHave(text("Поле обязательно для заполнения"), Duration.ofSeconds(15));
+    }
+
+    public void verifyAllFieldsFilledPay() {
+        $$(".input__sub").shouldHave(CollectionCondition.size(5))
+                .shouldHave(CollectionCondition.texts("Поле обязательно для заполнения"));
+    }
+
+    public void verifyInvalidOwnerPay() {//По идее в требованиях должно быть такое сообщение
+        $(".input__sub").shouldBe(visible)
+                .shouldHave(text("Введите имя и фамилию, указанные на карте"), Duration.ofSeconds(15));
+    }
+
+    //  public void verifyEmptyCVCPay() {// Для постого CVC
+    //     paymentHeader.shouldHave(text("CVC/CVV")).shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
+    // }
+
+
+    // public void allFieldEmptyNotification() {
+    //      mistakeFormatCardNumber();
+    //     mistakeFormatMonth();
+    //    mistakeFormatYear();
+    //     mistakeFormatOwner();
+    //    mistakeFormatCVC();
+    //  }
+
+    // public void mistakeFormatCardNumber() {
+    //     paymentHeader.shouldHave(text("Номер карты")).shouldHave(text("Неверный формат")).shouldBe(visible);
+    // }
+
+    // public  void mistakeFormatMonth() {
+    //      paymentHeader.shouldHave(text("Месяц")).shouldHave(text("Неверный формат")).shouldBe(visible);
+    // }
+
+    //  public  void mistakeFormatYear() {
+    //      paymentHeader.shouldHave(text("Год")).shouldHave(text("Неверный формат")).shouldBe(visible);
+    // }
+
+    // public void mistakeFormatOwner() {
+    //      paymentHeader.shouldHave(text("Владелец")).shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
+    // }
+
+
+    // public void wrongExpireMonth() {
+    //      paymentHeader.shouldHave(text("Месяц")).shouldHave(text("Неверно указан срок действия карты")).shouldBe(visible);
+    // }
+
+    //  public void wrongExpireYear() {
+    //     paymentHeader.shouldHave(text("Год")).shouldHave(text("Истёк срок действия карты")).shouldBe(visible);
+    //  }
+
+    //  public void farFutureWrongExpireYear(){
+    //    paymentHeader.shouldHave(text("Год")).shouldHave(text("Неверно указан срок действия карты")).shouldBe(visible);
+    // }
 
 
 }

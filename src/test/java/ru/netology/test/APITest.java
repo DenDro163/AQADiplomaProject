@@ -31,11 +31,8 @@ public class APITest {
     }
 
 
-
-
     @Test
     @DisplayName("3.1.")
-
     void paymentApprovedCardAPI() {
         given()
                 .spec(requestSpec)
