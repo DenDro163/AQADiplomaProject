@@ -101,52 +101,5 @@ public class PaymentPage {
     }
 
 
-    //Методы для тестов
-   // public void approvedPayment() {// для 1.1.
-     //   cardNumber.setValue(DataGenerator.getApprovedCardNumber());
-     //   cardMonth.setValue(DataGenerator.getValidMonth());
-     //   cardYear.setValue(DataGenerator.getValidYear());
-      //  cardOwner.setValue(DataGenerator.generateCardOwnerName());
-      //  cardCVC.setValue(DataGenerator.getRandomCVC());
-     //   continueButton.click();
-   // }
-
-   // public void declinedPayment() {// для 1.2.
-     //   cardNumber.setValue(DataGenerator.getDeclinedCardNumber());
-    //    cardMonth.setValue(DataGenerator.getValidMonth());
-    //    cardYear.setValue(DataGenerator.getValidYear());
-    //    cardOwner.setValue(DataGenerator.generateCardOwnerName());
-    //    cardCVC.setValue(DataGenerator.getRandomCVC());
-   //     continueButton.click();
-   // }
-
-    //public void otherBankPayment() {// для 1.3.
-     //   cardNumber.setValue(DataGenerator.getOtherBankCardNumber());
-     //   cardMonth.setValue(DataGenerator.getValidMonth());
-    //    cardYear.setValue(DataGenerator.getValidYear());
-    //    cardOwner.setValue(DataGenerator.generateCardOwnerName());
-    //    cardCVC.setValue(DataGenerator.getRandomCVC());
-   //     continueButton.click();
-  //  }
-
-    //public void allFieldEmpty() {// для 1.4.
-    //    cardNumber.setValue("");
-    //    cardMonth.setValue("");
-   //     cardYear.setValue("");
-    //    cardOwner.setValue("");
-    //    cardCVC.setValue("");
-   //     continueButton.click();
-  //  }
-
-
-    //public void emptyCardNumber() {// для 1.5.
-   //     cardNumber.setValue("");
-   //     cardMonth.setValue(DataGenerator.getValidMonth());
-   //     cardYear.setValue(DataGenerator.getValidYear());
-   //     cardOwner.setValue(DataGenerator.generateCardOwnerName());
-   //     cardCVC.setValue(DataGenerator.getRandomCVC());
-   //     continueButton.click();
-  //  }
-
 
 }
