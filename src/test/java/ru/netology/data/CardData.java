@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
     @AllArgsConstructor
     @NoArgsConstructor
     public class CardData {
-        private String cardNumber;
-        private String cardMonth;
-        private String cardYear;
-        private String cardOwner;
-        private String cardCVC;
+        private String number;
+        private String month;
+        private String year;
+        private String owner;
+        private String cvc;
     }
 
 

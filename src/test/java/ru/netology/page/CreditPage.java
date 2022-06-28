@@ -44,11 +44,11 @@ public class CreditPage {
     }
 
     public void getInsertCardDataForCredit(CardData cardData) {
-        cardNumber.setValue(cardData.getCardNumber());
-        cardMonth.setValue(cardData.getCardMonth());
-        cardYear.setValue(cardData.getCardYear());
-        cardOwner.setValue(cardData.getCardOwner());
-        cardCVC.setValue(cardData.getCardCVC());
+        cardNumber.setValue(cardData.getNumber());
+        cardMonth.setValue(cardData.getMonth());
+        cardYear.setValue(cardData.getYear());
+        cardOwner.setValue(cardData.getOwner());
+        cardCVC.setValue(cardData.getCvc());
         continueButton.click();
     }
 

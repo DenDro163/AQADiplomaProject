@@ -43,5 +43,71 @@ public class APITest {
                 .statusCode(200)
                 .extract().response().asString();
     }
+
+    @Test
+    @DisplayName("3.2.")
+    void paymentDeclinedCardAPI() {
+        given()
+                .spec(requestSpec)
+                .body(APIHelper.getDeclinedCard())
+                .when()
+                .post("/api/v1/pay")
+                .then()
+                .statusCode(200)
+                .extract().response().asString();
+    }
+
+    @Test
+    @DisplayName("3.3.")
+    void creditApprovedCardAPI() {
+        given()
+                .spec(requestSpec)
+                .body(APIHelper.getApprovedCard())
+                .when()
+                .post("/api/v1/credit")
+                .then()
+                .statusCode(200)
+                .extract().response().asString();
+    }
+
+
+    @Test
+    @DisplayName("3.4.")
+    void creditDeclinedCardAPI() {
+        given()
+                .spec(requestSpec)
+                .body(APIHelper.getDeclinedCard())
+                .when()
+                .post("/api/v1/credit")
+                .then()
+                .statusCode(200)
+                .extract().response().asString();
+    }
+
+    @Test
+    @DisplayName("3.5.")
+    void paymentOtherCardAPI() {//Баг, статус ответа 500
+        given()
+                .spec(requestSpec)
+                .body(APIHelper.getOtherCard())
+                .when()
+                .post("/api/v1/pay")
+                .then()
+                .statusCode(400)
+                .extract().response().asString();
+    }
+
+    @Test
+    @DisplayName("3.6.")
+    void creditOtherCardAPI() {//Баг, статус ответа 500
+        given()
+                .spec(requestSpec)
+                .body(APIHelper.getOtherCard())
+                .when()
+                .post("/api/v1/credit")
+                .then()
+                .statusCode(400)
+                .extract().response().asString();
+    }
 }
 

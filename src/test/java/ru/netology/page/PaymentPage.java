@@ -52,11 +52,11 @@ public class PaymentPage {
     }
 
     public void getInsertCardData(CardData cardData) {// Метод для заполнения данных карты
-        cardNumber.setValue(cardData.getCardNumber());
-        cardMonth.setValue(cardData.getCardMonth());
-        cardYear.setValue(cardData.getCardYear());
-        cardOwner.setValue(cardData.getCardOwner());
-        cardCVC.setValue(cardData.getCardCVC());
+        cardNumber.setValue(cardData.getNumber());
+        cardMonth.setValue(cardData.getMonth());
+        cardYear.setValue(cardData.getYear());
+        cardOwner.setValue(cardData.getOwner());
+        cardCVC.setValue(cardData.getCvc());
         continueButton.click();
     }
 
@@ -90,7 +90,7 @@ public class PaymentPage {
                 .shouldHave(text("Введите имя и фамилию, указанные на карте"), Duration.ofSeconds(15));
     }
 
-    //  public void verifyEmptyCVCPay() {// Для постого CVC
+    //  public void verifyEmptyCVCPay() {// Для пустого CVC
     //     paymentHeader.shouldHave(text("CVC/CVV")).shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
     // }
 
