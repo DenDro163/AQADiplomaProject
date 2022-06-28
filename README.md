@@ -13,7 +13,12 @@ ___
 
 * [AdoptOpenJDK 11.0.11+9](https://adoptopenjdk.net/index.html)
 * [Docker Desktop](https://www.docker.com/products/docker-desktop)
-* Работа выполнена на ПК с ОС Windows 10 Pro.
+
+#### Работа выполнена на ПК с установленным ПО:
+* Windows 10 Pro x64
+* IntelliJ IDEA 2022.1.1 (Ultimate Edition).
+* OpenJDK 11
+* Google Chrome 102.0.5005.115 x64
 
 ### Запуск:
 
