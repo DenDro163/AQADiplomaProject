@@ -3,7 +3,7 @@ package ru.netology.test;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
-import ru.netology.SQL.SQLHelperCredit;
+
 import ru.netology.SQL.SQLHelperPayment;
 import ru.netology.data.CardData;
 import ru.netology.page.CreditPage;
@@ -41,7 +41,7 @@ public class CreditTest {
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), generateYear(1), generateCardOwnerName(), getRandomCVC());// Создаем карту с данными
         creditPage.getInsertCardDataForCredit(card);//Заполняем поля данными карты
         creditPage.creditSuccessfulNotification();
-        assertEquals("APPROVED", SQLHelperCredit.getCardStatusApprovedForCredit());
+        assertEquals("APPROVED", SQLHelperPayment.getCardStatusApprovedForCredit());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class CreditTest {
         CardData card = new CardData(getDeclinedCardNumber(), generateMonth(1), generateYear(1), generateCardOwnerName(), getRandomCVC());
         creditPage.getInsertCardDataForCredit(card);
         creditPage.creditFailedNotification();
-        assertEquals("DECLINED", SQLHelperCredit.getCardStatusDeclinedForCredit());
+        assertEquals("DECLINED", SQLHelperPayment.getCardStatusDeclinedForCredit());
     }
 
     @Test
