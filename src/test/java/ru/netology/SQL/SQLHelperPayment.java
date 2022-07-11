@@ -15,7 +15,9 @@ public class SQLHelperPayment {
         try (
 
                 Connection conn = DriverManager.getConnection(
-                        System.getProperty("db.url"));//Подключение к БД через драйвер
+                        System.getProperty("dataBase.url"),//Подключение к БД через драйвер
+                        System.getProperty("username"),
+                        System.getProperty("password"));
                 Statement dataStmt = conn.createStatement();//Создаем абстракцию выполнения запроса
         ) {
             try (ResultSet rs = dataStmt.executeQuery(cardStatusApproved)) {//Выполняем запрос
@@ -33,7 +35,9 @@ public class SQLHelperPayment {
         val cardStatusDeclined = "SELECT status FROM payment_entity";
         try (
                 val conn = DriverManager.getConnection(
-                        System.getProperty("db.url"));
+                        System.getProperty("dataBase.url"),
+                        System.getProperty("username"),
+                        System.getProperty("password"));
                 val dataStmt = conn.createStatement();
         ) {
             try (val rs = dataStmt.executeQuery(cardStatusDeclined)) {
@@ -51,7 +55,9 @@ public class SQLHelperPayment {
         val cardStatusApproved = "SELECT status FROM credit_request_entity";//Запрашиваю данные стобца статус таблицы
         try (
                 Connection conn = DriverManager.getConnection(
-                        System.getProperty("db.url"));//Подключение к БД через драйвер
+                        System.getProperty("dataBase.url"),//Подключение к БД через драйвер
+                        System.getProperty("username"),
+                        System.getProperty("password"));
                 Statement dataStmt = conn.createStatement();//Создаем абстракцию выполнения запроса
         ) {
             try (ResultSet rs = dataStmt.executeQuery(cardStatusApproved)) {//Выполняем запрос
@@ -68,7 +74,9 @@ public class SQLHelperPayment {
         val cardStatusDeclined = "SELECT status FROM credit_request_entity";
         try (
                 val conn = DriverManager.getConnection(
-                        System.getProperty("db.url"));
+                        System.getProperty("dataBase.url"),
+                        System.getProperty("username"),
+                        System.getProperty("password"));
                 val dataStmt = conn.createStatement();
         ) {
             try (val rs = dataStmt.executeQuery(cardStatusDeclined)) {
