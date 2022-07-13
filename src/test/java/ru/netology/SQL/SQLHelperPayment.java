@@ -7,6 +7,27 @@ import java.sql.*;
 
 public class SQLHelperPayment {
 
+    @SneakyThrows
+    public static void dropTables() {
+        try (
+                Connection conn = DriverManager.getConnection(
+                        System.getProperty("dataBase.url"),//Подключение к БД через драйвер
+                        System.getProperty("username"),
+                        System.getProperty("password"));
+                Statement stmt = conn.createStatement();//Создаем абстракцию выполнения запроса
+        ) {
+            val dropTableCRE = "DELETE FROM credit_request_entity";//Удаляю данные таблиц
+            val dropTablePE = "DELETE FROM payment_entity";
+            val dropTable = "DELETE FROM order_entity";
+            stmt.executeUpdate(dropTableCRE);
+            stmt.executeUpdate(dropTablePE);
+            stmt.executeUpdate(dropTable);
+            System.out.println("Data deleted in Data Base tables...");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @SneakyThrows
 

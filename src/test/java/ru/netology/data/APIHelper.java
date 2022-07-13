@@ -11,16 +11,6 @@ import static io.restassured.RestAssured.given;
 public class APIHelper {
 
 
-
-   // @Value
- //   public static class CardData {
-  //      String number;
-   //     String month;
-    //    String year;
-   //     String holder;
-   //     String cvv;
-   // }
-
     public static CardData getApprovedCard() {
         return new CardData("4444 4444 4444 4441", "09", "24", "Popov Igor", "123");
     }

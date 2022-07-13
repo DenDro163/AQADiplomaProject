@@ -41,6 +41,7 @@ public class PaymentTest {
     @Test
     @DisplayName("1.1. Успешная покупка.")
     public void approvedPathPayTest() {
+        SQLHelperPayment.dropTables(); // Удаляет старые данные перед тестом
         var startPage = new StartPage();//Создаем стартовую страницу
         var paymentPage = startPage.payment();//Жмем на кнопку купить на стартовой
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), generateYear(1), generateCardOwnerName(), getRandomCVC());// Создаем карту с данными
@@ -52,6 +53,7 @@ public class PaymentTest {
     @Test
     @DisplayName("1.2. Карта отклонена.")
     public void declinedPathPayTest() {//Баг.
+        SQLHelperPayment.dropTables(); // Удаляет старые данные перед тестом
         var startPage = new StartPage();
         var paymentPage = startPage.payment();
         CardData card = new CardData(getDeclinedCardNumber(), generateMonth(1), generateYear(1), generateCardOwnerName(), getRandomCVC());

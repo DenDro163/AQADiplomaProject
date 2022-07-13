@@ -36,6 +36,7 @@ public class CreditTest {
     @Test
     @DisplayName("2.1. Успешная покупка.")
     public void approvedPathCreditTest() {
+        SQLHelperPayment.dropTables(); // Удаляет старые данные перед тестом
         var startPage = new StartPage();//Создаем стартовую страницу
         var creditPage = startPage.creditPay();//Жмем на кнопку купить на стартовой
         CardData card = new CardData(getApprovedCardNumber(), generateMonth(1), generateYear(1), generateCardOwnerName(), getRandomCVC());// Создаем карту с данными
@@ -47,6 +48,7 @@ public class CreditTest {
     @Test
     @DisplayName("2.2. Карта отклонена.")
     public void declinedPathCreditTest() {//Баг.
+        SQLHelperPayment.dropTables(); // Удаляет старые данные перед тестом
         var startPage = new StartPage();
         var creditPage = startPage.creditPay();
         CardData card = new CardData(getDeclinedCardNumber(), generateMonth(1), generateYear(1), generateCardOwnerName(), getRandomCVC());

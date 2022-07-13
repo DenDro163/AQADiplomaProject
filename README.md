@@ -36,3 +36,5 @@ ___
 ### Для работы с PostgreSQL:
 * перезапустить SUT aqa-shop.jar командой: 
   `java -jar artifacts\aqa-shop.jar --spring.datasource.url=jdbc:postgresql://localhost:5432/app &`
+* Запустить авто тесты командой:
+  `./gradlew clean test -DdataBase.url=jdbc:postgresql://localhost:5432/app -Dusername=app -Dpassword=pass --info`
