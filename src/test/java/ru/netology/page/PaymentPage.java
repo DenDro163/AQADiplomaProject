@@ -24,19 +24,18 @@ public class PaymentPage {
     private SelenideElement paymentHeader = $("[class='form form_size_m form_theme_alfa-on-white']");
 
     //Параметры карты.
-    private SelenideElement cardNumber = $("[placeholder= '0000 0000 0000 0000']");
-    private SelenideElement cardMonth = $("[placeholder= '08']");
-    private SelenideElement cardYear = $("[placeholder= '22']");
-    private SelenideElement cardOwner = $(byText("Владелец")).parent().$(".input__control");
-    private SelenideElement cardCVC = $("[placeholder= '999']");
+    private SelenideElement cardNumberField = $("[placeholder= '0000 0000 0000 0000']");
+    private SelenideElement cardMonthField = $("[placeholder= '08']");
+    private SelenideElement cardYearField = $("[placeholder= '22']");
+    private SelenideElement cardOwnerField = $(byText("Владелец")).parent().$(".input__control");
+    private SelenideElement cardCVCField = $("[placeholder= '999']");
 
 
     //Разные кнопки, оповещения.
     private SelenideElement continueButton = $(withText("Продолжить"));
     private SelenideElement succeedNotification = $(".notification_status_ok");
-    private SelenideElement closeSucceedNotification = $("[type='button']");
     private SelenideElement failedNotification = $(".notification_status_error");
-    private SelenideElement closeFailedNotification = $("[type='button']");
+
 
     public PaymentPage() {
         paymentHeader.shouldBe(visible);
@@ -52,11 +51,11 @@ public class PaymentPage {
     }
 
     public void getInsertCardData(CardData cardData) {// Метод для заполнения данных карты
-        cardNumber.setValue(cardData.getNumber());
-        cardMonth.setValue(cardData.getMonth());
-        cardYear.setValue(cardData.getYear());
-        cardOwner.setValue(cardData.getOwner());
-        cardCVC.setValue(cardData.getCvc());
+        cardNumberField.setValue(cardData.getNumber());
+        cardMonthField.setValue(cardData.getMonth());
+        cardYearField.setValue(cardData.getYear());
+        cardOwnerField.setValue(cardData.getOwner());
+        cardCVCField.setValue(cardData.getCvc());
         continueButton.click();
     }
 

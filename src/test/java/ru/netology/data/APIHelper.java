@@ -1,27 +1,18 @@
 package ru.netology.data;
 
+import com.google.gson.Gson;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import lombok.Value;
+import org.asynchttpclient.Response;
+import ru.netology.page.PaymentPage;
 
 import static io.restassured.RestAssured.given;
 
 public class APIHelper {
 
-
-    public static CardData getApprovedCard() {
-        return new CardData("4444 4444 4444 4441", "09", "24", "Popov Igor", "123");
-    }
-
-    public static CardData getDeclinedCard() {
-        return new CardData("4444 4444 4444 4442", "09", "24", "Popov Igor", "123");
-    }
-
-    public static CardData getOtherCard() {
-        return new CardData("3467 5437 3589 1589", "09", "24", "Popov Igor", "123");
-    }
 
     public static RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
@@ -30,4 +21,30 @@ public class APIHelper {
             .setContentType(ContentType.JSON)
             .log(LogDetail.ALL)
             .build();
+
+
+    public static String paymentPageForm(CardData cardData) {
+        return given()
+                .spec(requestSpec)
+                .body(cardData)
+                .when()
+                .post("/api/v1/pay")
+                .then()
+                .statusCode(200)
+                .extract().response().asString();
+
+    }
+
+    public static String creditRequestPageForm(CardData cardData) {
+        return given()
+                .spec(requestSpec)
+                .body(cardData)
+                .when()
+                .post("/api/v1/credit")
+                .then()
+                .statusCode(200)
+                .extract().response().asString();
+    }
+
+
 }
