@@ -6,6 +6,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import lombok.val;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -20,8 +21,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.netology.data.APIHelper.*;
-import static ru.netology.data.DataGenerator.getApprovedCard;
-import static ru.netology.data.DataGenerator.getDeclinedCard;
+import static ru.netology.data.DataGenerator.*;
 
 public class APITest {
 
@@ -40,15 +40,22 @@ public class APITest {
     @DisplayName("3.1.")
     void paymentApprovedCardAPI() {
         val validApprovedCard = getApprovedCard();
-        val status = paymentPageForm(validApprovedCard);
+        val status = paymentPageForm(validApprovedCard)
+                .then()
+                .statusCode(200)
+                .extract().response().asString();
         assertTrue(status.contains("APPROVED"));
     }
+
 
     @Test
     @DisplayName("3.2.")
     void paymentDeclinedCardAPI() {
         val validDeclinedCard = getDeclinedCard();
-        val status = paymentPageForm(validDeclinedCard);
+        val status = paymentPageForm(validDeclinedCard)
+                .then()
+                .statusCode(200)
+                .extract().response().asString();
         assertTrue(status.contains("DECLINED"));
 
     }
@@ -57,7 +64,10 @@ public class APITest {
     @DisplayName("3.3.")
     void creditApprovedCardAPI() {
         val validApprovedCard = getApprovedCard();
-        val status = creditRequestPageForm(validApprovedCard);
+        val status = creditRequestPageForm(validApprovedCard)
+        .then()
+                .statusCode(200)
+                .extract().response().asString();
         assertTrue(status.contains("APPROVED"));
     }
 
@@ -66,18 +76,18 @@ public class APITest {
     @DisplayName("3.4.")
     void creditDeclinedCardAPI() {
         val validDeclinedCard = getDeclinedCard();
-        val status = creditRequestPageForm(validDeclinedCard);
+        val status = creditRequestPageForm(validDeclinedCard)
+        .then()
+                .statusCode(200)
+                .extract().response().asString();
         assertTrue(status.contains("DECLINED"));
     }
 
     @Test
     @DisplayName("3.5.")
     void paymentOtherCardAPI() {//Баг, статус ответа 500
-        given()
-                .spec(requestSpec)
-                .body(DataGenerator.getOtherCard())
-                .when()
-                .post("/api/v1/pay")
+        val otherBankCardPay = getOtherCard();
+        val status = paymentPageForm(otherBankCardPay)
                 .then()
                 .statusCode(400)
                 .extract().response().asString();
@@ -86,11 +96,8 @@ public class APITest {
     @Test
     @DisplayName("3.6.")
     void creditOtherCardAPI() {//Баг, статус ответа 500
-        given()
-                .spec(requestSpec)
-                .body(DataGenerator.getOtherCard())
-                .when()
-                .post("/api/v1/credit")
+        val otherBankCardCredit = getOtherCard();
+        val status = creditRequestPageForm(otherBankCardCredit)
                 .then()
                 .statusCode(400)
                 .extract().response().asString();
