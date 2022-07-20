@@ -40,10 +40,7 @@ public class APITest {
     @DisplayName("3.1.")
     void paymentApprovedCardAPI() {
         val validApprovedCard = getApprovedCard();
-        val status = paymentPageForm(validApprovedCard)
-                .then()
-                .statusCode(200)
-                .extract().response().asString();
+        val status = queryForm(validApprovedCard, "/api/v1/pay", 200);
         assertTrue(status.contains("APPROVED"));
     }
 
@@ -52,10 +49,7 @@ public class APITest {
     @DisplayName("3.2.")
     void paymentDeclinedCardAPI() {
         val validDeclinedCard = getDeclinedCard();
-        val status = paymentPageForm(validDeclinedCard)
-                .then()
-                .statusCode(200)
-                .extract().response().asString();
+        val status = queryForm(validDeclinedCard, "/api/v1/pay", 200);
         assertTrue(status.contains("DECLINED"));
 
     }
@@ -64,10 +58,7 @@ public class APITest {
     @DisplayName("3.3.")
     void creditApprovedCardAPI() {
         val validApprovedCard = getApprovedCard();
-        val status = creditRequestPageForm(validApprovedCard)
-        .then()
-                .statusCode(200)
-                .extract().response().asString();
+        val status = queryForm(validApprovedCard, "/api/v1/credit", 200);
         assertTrue(status.contains("APPROVED"));
     }
 
@@ -76,10 +67,7 @@ public class APITest {
     @DisplayName("3.4.")
     void creditDeclinedCardAPI() {
         val validDeclinedCard = getDeclinedCard();
-        val status = creditRequestPageForm(validDeclinedCard)
-        .then()
-                .statusCode(200)
-                .extract().response().asString();
+        val status = queryForm(validDeclinedCard, "/api/v1/credit", 200);
         assertTrue(status.contains("DECLINED"));
     }
 
@@ -87,20 +75,14 @@ public class APITest {
     @DisplayName("3.5.")
     void paymentOtherCardAPI() {//Баг, статус ответа 500
         val otherBankCardPay = getOtherCard();
-        val status = paymentPageForm(otherBankCardPay)
-                .then()
-                .statusCode(400)
-                .extract().response().asString();
+        val status = queryForm(otherBankCardPay, "/api/v1/pay", 400);
     }
 
     @Test
     @DisplayName("3.6.")
     void creditOtherCardAPI() {//Баг, статус ответа 500
         val otherBankCardCredit = getOtherCard();
-        val status = creditRequestPageForm(otherBankCardCredit)
-                .then()
-                .statusCode(400)
-                .extract().response().asString();
+        val status = queryForm(otherBankCardCredit, "/api/v1/credit", 400);
     }
 }
 

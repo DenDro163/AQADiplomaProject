@@ -20,21 +20,15 @@ public class APIHelper {
             .build();
 
 
-    public static Response paymentPageForm(CardData cardData) {
+    public static String queryForm(CardData cardData, String url, int responseStatus) {
         return given()
                 .spec(requestSpec)
                 .body(cardData)
                 .when()
-                .post("/api/v1/pay");
-    }
-
-    public static Response creditRequestPageForm(CardData cardData) {
-        return given()
-                .spec(requestSpec)
-                .body(cardData)
-                .when()
-                .post("/api/v1/credit");
-
+                .post(url)
+                .then()
+                .statusCode(responseStatus)
+                .extract().response().asString();
     }
 
 
