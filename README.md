@@ -38,4 +38,4 @@ ___
   `java -jar artifacts\aqa-shop.jar --spring.datasource.url=jdbc:postgresql://localhost:5432/app &`
 * Запустить авто тесты командой:
   `./gradlew clean test -DdataBase.url=jdbc:postgresql://localhost:5432/app -Dusername=app -Dpassword=pass --info`
-  [![Build status](https://ci.appveyor.com/api/projects/status/lj5rmw5slet0jy2q?svg=true)](https://ci.appveyor.com/project/DenDro163/aqadiplomaproject)
+  
